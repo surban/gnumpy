@@ -49,7 +49,9 @@ _useGpu = _os.environ.get('GNUMPY_USE_GPU', 'auto')
 assert _useGpu in ('auto', 'yes', 'no'), "environment variable GNUMPY_USE_GPU, if present, should be one of 'auto', 'yes', 'no'."
 if _useGpu == 'auto':
  try: import cudamat as _cudamat; _useGpu = 'yes'
- except: print 'gnumpy: failed to import cudamat. Using npmat instead. No GPU will be used.'; _useGpu = 'no'
+ except:
+  #print 'gnumpy: failed to import cudamat. Using npmat instead. No GPU will be used.';
+  _useGpu = 'no'
 if _useGpu == 'yes':
  import cudamat as _cudamat
 elif _useGpu == 'no':
@@ -67,7 +69,7 @@ def board_id_to_use():
   import gpu_lock
   return gpu_lock.obtain_lock_id()
  except:
-  print 'gnumpy: failed to use gpu_lock. Using board #0 without knowing whether it is in use or not.'
+  #print 'gnumpy: failed to use gpu_lock. Using board #0 without knowing whether it is in use or not.'
   return 0
  
 _boardId = None
